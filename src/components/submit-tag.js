@@ -5,15 +5,24 @@ class SubmitTag extends React.Component {
     super(props);
     this.state = {
       name: '',
+      parent: '',
       parents: [],
       children: []
     };
 
+    this.appendTag = this.appendTag.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleParentChange = this.handleParentChange.bind(this);
     this.handleChildChange = this.handleChildChange.bind(this);
-    this.random = this.random.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  appendTag(tag) {
+    console.log("tags:" + tag);
+    var newArray = this.state.parents.slice();
+    newArray.push(tag);
+    this.setState({parents: newArray});
+    console.log(this.state.parents);
   }
 
   handleNameChange(event) {
@@ -25,9 +34,11 @@ class SubmitTag extends React.Component {
     // for onChange i'll just call the check tags function every time there's a comma typed.
   handleParentChange(event) {
     console.log("handleParentChange is running");
-    var newArray = this.state.parents.slice();
-    newArray.push(event.target.value);
-    this.setState({parents: newArray})
+    this.setState({parent: event.target.value});
+    if (this.state.parent.includes(",")) {
+        this.appendTag(this.state.parent.replace(",", ''));
+        this.setState({parent: ''});
+    }
   }
 
   handleChildChange(event) {
@@ -40,9 +51,6 @@ class SubmitTag extends React.Component {
     event.preventDefault();
   }
 
-  random() {
-    console.log("random is running");
-  }
 
   render() {
     return (
@@ -50,7 +58,8 @@ class SubmitTag extends React.Component {
       <h3>Submit new tag</h3>
       <form onSubmit={this.handleSubmit}>
         <label>Name:<input type="text" value={this.state.name} onChange={this.handleNameChange} /></label>
-        <label>Parent Tags:<input type="text" value={this.state.parents} onChange={this.handleParentChange} /></label>
+        <label>Parent Tags:<input type="text" value={this.state.parent} onChange={this.handleParentChange} /></label>
+        <p>{this.state.parents}</p>
         <label>Child Tags:<input type="text" value={this.state.children} onChange={this.handleChildChange} /></label>
         <input type="submit" value="Submit" />
       </form>
