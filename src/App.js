@@ -1,63 +1,26 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./components/home";
 import Nav from "./components/nav";
+import Login from "./components/login";
 import './App.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/bootstrap/dist/js/bootstrap.min.js';
+import '../node_modules/jquery/dist/jquery.min.js';
+import '../node_modules/popper.js/dist/popper.min.js';
 
-const BasicExample = () => (
+const App= () => (
   <Router>
     <div>
     <Nav />
+    <br />
+    <br />
+    <br />
       <Route exact path="/" component={Home} />
-      <Route path="/about" component={About} />
-      <Route path="/topics" component={Topics} />
+      <Route path="/login" component={Login} />
     </div>
   </Router>
 );
 
-const About = () => (
-  <div>
-    <h2>About</h2>
-  </div>
-);
-
-const Topics = ({ match }) => (
-  <div>
-    <HelloMessage />
-    <h2>Topics</h2>
-    <ul>
-      <li>
-        <Link to={`${match.url}/rendering`}>Rendering with React</Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/components`}>Components</Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/props-v-state`}>Props v. State</Link>
-      </li>
-    </ul>
-
-    <Route path={`${match.url}/:topicId`} component={Topic} />
-    <Route
-      exact
-      path={match.url}
-      render={() => <h3>Please select a topic.</h3>}
-    />
-  </div>
-);
-
-const Topic = ({ match }) => (
-  <div>
-    <HelloMessage />
-    <h3>{match.params.topicId}</h3>
-  </div>
-);
-
-class HelloMessage extends React.Component {
-  render() {
-    return <p>Hello World</p>;
-  }
-}
-
-export default BasicExample;
+export default App;
 
